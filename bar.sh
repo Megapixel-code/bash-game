@@ -2,13 +2,20 @@
 
 BARSIZE=100
 
-render_bar() {
-   local progress="$1"
-   local total="$2"
+render() {
+   local var_name="$1[@]"
 
-   local percent=$((progress * 100 / total))
+   local game=("${!var_name}")
+   local size="$2"
 
-   echo "$percent"
+   printf "\033[2J" # clear the screen
+   printf "\[\e[1;1H" # set the cursor to the top
+
+   echo "${game[@]}"
+   echo "$size"
 }
 
-render_bar 500 500
+game=(1 0 1 2 2 1 0 1)
+s=4
+
+render game "$s"
