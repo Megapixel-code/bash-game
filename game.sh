@@ -4,12 +4,31 @@ TICK_RATE=24 # number of frame per second
 SCREEN_HEIGHT=100
 SCREEN_WIDTH=100
 
+get_term_size() {
+	# it like so :
+	# term_size=($(get_term_size))
+	# rows="${term_size[0]}"
+	# cols="${term_size[1]}"
+
+	local term_size
+
+	term_size=$(stty size)
+	echo "$term_size"
+	return 0
+}
+
 print_game() {
 	local var_name="$1[@]"
 
 	local var_game=("${!var_name}")
 	local var_size=$2
 
+	if (("$var_size" == 0)); then
+		echo 'ERROR : in "print_game" function'
+		echo "        size variable is equal to zero"
+		echo "        exiting now"
+		exit 1
+	fi
 	if (("${#var_game[@]}" % "$var_size" != 0)); then
 		echo 'ERROR : in "print_game" function'
 		echo "        game variable is not divisable by size"
@@ -48,9 +67,8 @@ game=(1 1 1 2
 	1 0 0 2
 	1 0 0 2
 	2 1 0 1)
-size=4
+game_size=4
 bars=()
 
-print_game game "$size"
-render_frame game "$size"
-print_game game "$size"
+render_frame game "$game_size"
+print_game game "$game_size"
