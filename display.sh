@@ -1,23 +1,5 @@
 #!/usr/bin/env bash
 
-TICK_RATE=24 # number of frame per second
-
-source "./display.sh"
-source "./utils.sh"
-
-get_term_size() {
-	# it like so :
-	# term_size=($(get_term_size))
-	# rows="${term_size[0]}"
-	# cols="${term_size[1]}"
-
-	local term_size
-
-	term_size=$(stty size)
-	echo "$term_size"
-	return 0
-}
-
 print_game() {
 	local var_name="$1[@]"
 
@@ -60,16 +42,3 @@ render_frame() {
 	echo "${var_game[@]}"
 	echo "$var_size"
 }
-
-# Each tile is 100x100.
-player_position=(150 150) # x and y position of the player
-player_angle=0 # deg of rotation of the player value between (0-359)
-game=(1 1 1 2
-	1 0 0 2
-	1 0 0 2
-	2 1 0 1)
-game_size=4
-bars=()
-
-render_frame game "$game_size"
-print_game game "$game_size"
