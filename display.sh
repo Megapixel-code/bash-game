@@ -31,14 +31,28 @@ print_game() {
 }
 
 render_frame() {
-	local var_name="$1[@]"
+	local var_name_bars="$1[@]"
+	local var_name_size="$2[@]"
 
-	local var_game=("${!var_name}")
-	local var_size="$2"
+	local var_bars=("${!var_name_bars}")
+	local var_size=("${!var_name_size}")
+
+	local bottom_gap_col=0
+	local top_gap_col=0
 
 	printf "\033[2J" # clear the screen
 	printf "\[\e[1;1H" # set the cursor to the top
 
-	echo "${var_game[@]}"
-	echo "$var_size"
+	for ((col = 0; col < var_size[0]; col++)); do
+		for ((row = 0; row < var_size[1]; row++)); do
+			bottom_gap_col=$(((var_size[0] - var_bars[row]) / 2))
+			top_gap_col=$((var_size[0] - bottom_gap_col))
+
+			if ((col < bottom_gap_col || col > top_gap_col)); then
+				printf " "
+			else
+				printf "0"
+			fi
+		done
+	done
 }
