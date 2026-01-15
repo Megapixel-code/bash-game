@@ -2,8 +2,8 @@
 
 TICK_RATE=24 # number of frame per second
 
-source "./display.sh"
-source "./utils.sh"
+source "./display"
+source "./utils"
 
 # Each tile is 100x100.
 player_position=(150 150) # x and y position of the player
