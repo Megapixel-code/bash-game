@@ -15,7 +15,7 @@ get_term_size() {
 # val=($(get_term_size))
 # echo "${val[1]}"
 
-gen_bars() {
+gen_bars_temp() {
 	local var_size_name="$1[@]"
 
 	local var_size=("${!var_size_name}")
@@ -25,6 +25,12 @@ gen_bars() {
 	for ((row = 0; row < var_size[1]; row++)); do
 		var_bar[row]=$((row / 3))
 	done
+
+	echo "${var_bar[@]}"
+	return 0
+}
+
+gen_bars() {
 
 	echo "${var_bar[@]}"
 	return 0

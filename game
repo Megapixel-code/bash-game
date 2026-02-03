@@ -1,9 +1,26 @@
 #!/usr/bin/env bash
 
+# disable var is unused
+# shellcheck disable=SC2034
+
 TICK_RATE=24 # number of frame per second
 
 source "./display"
 source "./utils"
+
+stty -echo # disable user input
+
+game_loop() {
+	local inputs
+
+	read -t 1 -n 1 -r inputs
+
+	size=($(get_term_size))
+	bars=($(gen_bars_temp size))
+	render_frame bars size
+
+	printf "%s " "${inputs[@]}"
+}
 
 # Each tile is 100x100.
 player_position=(150 150) # x and y position of the player
@@ -14,10 +31,6 @@ game=(1 1 1 2
 	2 1 0 1)
 game_size=4
 
-# render_frame game "$game_size"
 # print_game game "$game_size"
 
-size=($(get_term_size))
-bars=($(gen_bars size))
-
-render_frame bars size
+game_loop
