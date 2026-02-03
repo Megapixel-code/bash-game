@@ -31,7 +31,25 @@ gen_bars_temp() {
 }
 
 gen_bars() {
-
 	echo "${var_bar[@]}"
+	return 0
+}
+
+setup() {
+	stty -echo # disable user input
+
+	# setup chars sig
+	self_pid="$!"
+
+	while true; do
+		read -r -s -n 1 key
+		case "$key" in
+			[hH]) kill --signal "$SIG_LEFT" "$self_pid" ;;
+			[jJ]) kill --signal "$SIG_BACKWARD" "$self_pid" ;;
+			[kK]) kill --signal "$SIG_FORWARD" "$self_pid" ;;
+			[lL]) kill --signal "$SIG_RIGHT" "$self_pid" ;;
+		esac
+	done
+
 	return 0
 }
