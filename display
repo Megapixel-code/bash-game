@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck source=./game
 
 print_game() {
 	local var_name="$1[@]"
